@@ -147,11 +147,15 @@ npm start    # Inicia a aplicação
 
 ## 🎓 Autores
 - **Lucas Silva de Oliveira** - Desenvolvedor Back-end
-   - [GitHub](https://github.com/lucas-oliveirah17) | [LinkedIn](https://www.linkedin.com/in/lucas-oliveirah17/)
+   
+   [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/lucas-oliveirah17)
+   [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=plastic&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lucas-oliveirah17/)
 
 - **Daniel Navarro Porto** - Desenvolvedor Front-end & Segurança
-   - [GitHub](https://github.com/danielnporto) | [LinkedIn](https://www.linkedin.com/in/danielnporto/)
- 
+
+   [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/danielnporto)
+   [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=plastic&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/danielnporto/)
+
 ---
 
 ## 📄 Licença

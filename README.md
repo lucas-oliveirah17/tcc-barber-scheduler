@@ -114,6 +114,7 @@ git clone https://github.com/lucas-oliveirah17/tcc-barber-scheduler.git
 ```
 
 **2.Configurar Variáveis de Ambiente:**
+
 **a. Para o Docker (Banco de Dados):**
 * Na raiz do projeto, crie um arquivo chamado `.env`.
 * Copie o conteúdo de `.env.example` para o `.env` e define a senha:

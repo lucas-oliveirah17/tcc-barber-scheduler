@@ -93,7 +93,9 @@ Este projeto foi construído com as seguintes tecnologias:
     * Postman (para testes de API)
 * **IDEs:**
     * Eclipse IDE
+      * Plugin: editorconfig-eclipse 0.x
     * Visual Studio Code
+    * DBeaver
 
 ---
 

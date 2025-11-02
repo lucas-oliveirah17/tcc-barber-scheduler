@@ -1,5 +1,7 @@
 package br.com.barberscheduler.backend.model;
 
+import br.com.barberscheduler.backend.model.enums.PerfilUsuario;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,16 +18,16 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String nome;
     
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 100)
     private String email;
     
     @Column(nullable = false)
     private String senha;
     
-    @Column(nullable = true)
+    @Column(nullable = true, length = 20)
     private String telefone;
     
     @Enumerated(EnumType.STRING)

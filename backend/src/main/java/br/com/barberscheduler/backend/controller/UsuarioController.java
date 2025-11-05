@@ -1,6 +1,6 @@
 package br.com.barberscheduler.backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,48 +19,44 @@ import br.com.barberscheduler.backend.service.UsuarioService;
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
+    
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
     
     @PostMapping
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
-        Usuario novoUsuario = usuarioService.criarUsuario(usuario);
-        return ResponseEntity.status(201).body(novoUsuario);
+    public ResponseEntity<Usuario> criar(
+            @RequestBody Usuario usuario) {
+        Usuario novoUsuario = usuarioService.criar(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
     
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarTodosUsuarios() {
-        return ResponseEntity.ok(usuarioService.listarTodos());
-        
+    public ResponseEntity<List<Usuario>> listarTodos() {
+        List<Usuario> usuarios = usuarioService.listarTodos();
+        return ResponseEntity.ok(usuarios); 
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long id) {
-        return usuarioService.buscarPorId(id)
-                .map(usuario -> ResponseEntity.ok(usuario))
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Usuario> buscarPorId(
+            @PathVariable Long id) {
+        Usuario usuarioEncontrado = usuarioService.buscarPorId(id);
+        return ResponseEntity.ok(usuarioEncontrado);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> atualizarUsuario(
+    public ResponseEntity<Usuario> atualizar(
             @PathVariable Long id, 
-            @RequestBody Usuario usuarioAtualizado) {
-        try {
-            Usuario usuario = usuarioService.atualizarUsuario(id, usuarioAtualizado);
-            return ResponseEntity.ok(usuario);
-        } catch(RuntimeException e) {
-            return ResponseEntity.notFound().build();           
-        }
+            @RequestBody Usuario usuario) {
+        Usuario usuarioAtualizado = usuarioService.atualizar(id, usuario);
+        return ResponseEntity.ok(usuarioAtualizado);
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Usuario> deletarUsuario(@PathVariable Long id){
-        try {
-            usuarioService.deletarUsuario(id);
-            return ResponseEntity.noContent().build();
-            
-        } catch(RuntimeException e) {
-            return ResponseEntity.notFound().build();            
-        }
+    public ResponseEntity<Void> deletar(
+            @PathVariable Long id){
+        usuarioService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

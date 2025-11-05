@@ -33,7 +33,8 @@ public class ProfissionalService {
     public Profissional buscarPorId(Long id) {
         Optional<Profissional> profissional = profissionalRepository.findById(id);
         return profissional.orElseThrow(
-                () -> new EntityNotFoundException("Profissional de ID " + id + " não encontrado."));
+                () -> new EntityNotFoundException(
+                        "Profissional de ID " + id + " não encontrado."));
     }
     
     @Transactional
@@ -50,7 +51,8 @@ public class ProfissionalService {
     @Transactional
     public Profissional atualizar(Long id, Profissional profissionalAtualizado) {
         Profissional profissionalExistente = profissionalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Profissional de id " + id + " não encontrado." ));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Profissional de ID " + id + " não encontrado." ));
         
         profissionalExistente.setEspecialidades(profissionalAtualizado.getEspecialidades());
         profissionalExistente.setUsuario(profissionalAtualizado.getUsuario());
@@ -60,7 +62,8 @@ public class ProfissionalService {
     
     public void deletar(Long id) {
         if(!profissionalRepository.existsById(id)) {
-            throw new RuntimeException("Profissional de id " + id + " não encontrado.");      
+            throw new EntityNotFoundException(
+                    "Profissional de ID " + id + " não encontrado.");      
         }
         profissionalRepository.deleteById(id);
     }

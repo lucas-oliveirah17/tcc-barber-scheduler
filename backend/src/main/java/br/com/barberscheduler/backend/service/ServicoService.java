@@ -1,6 +1,5 @@
 package br.com.barberscheduler.backend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,30 +8,41 @@ import java.util.Optional;
 import br.com.barberscheduler.backend.model.Servico;
 import br.com.barberscheduler.backend.repository.ServicoRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ServicoService {
-    @Autowired
-    private ServicoRepository servicoRepository;
+    private final ServicoRepository servicoRepository;
+    
+    public ServicoService(
+            ServicoRepository servicoRepository) {
+        this.servicoRepository = servicoRepository;
+    }
     
     public List<Servico> listarTodos() {
         return servicoRepository.findAll();
     }
     
-    public Optional<Servico> buscarPorId(Long id) {
-        return servicoRepository.findById(id);
+    public Servico buscarPorId(Long id) {
+        Optional<Servico> servico = servicoRepository.findById(id);
+        return servico.orElseThrow(
+                () -> new EntityNotFoundException(
+                        "Serviço de ID " + id + " não encontrado."));
     }
     
-    public Servico criarServico(Servico servico) { 
+    public Servico criar(Servico servico) { 
         if(servicoRepository.findByNome(servico.getNome()).isPresent()) {
-            throw new RuntimeException("Nome de serviço já cadastrado.");
+            throw new IllegalArgumentException(
+                    "Nome de serviço já cadastrado.");
         }
         
         return servicoRepository.save(servico);
     }
     
-    public Servico atualizarServico(Long id, Servico servicoAtualizado) {
+    public Servico atualizar(Long id, Servico servicoAtualizado) {
         Servico servicoExistente = servicoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Serviço de id" + id + "não encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Serviço de ID " + id + " não encontrado."));
         
         servicoExistente.setNome(servicoAtualizado.getNome());
         servicoExistente.setDescricao(servicoAtualizado.getDescricao());
@@ -42,9 +52,10 @@ public class ServicoService {
         return servicoRepository.save(servicoExistente);
     }
     
-    public void deletarServico(Long id) {
+    public void deletar(Long id) {
         if(!servicoRepository.existsById(id)) {
-            throw new RuntimeException("Serviço de id " + id + " não encontrado.");
+            throw new EntityNotFoundException(
+                    "Serviço de ID " + id + " não encontrado.");
         }
         servicoRepository.deleteById(id);
     }

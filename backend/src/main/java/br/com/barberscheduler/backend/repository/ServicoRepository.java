@@ -9,5 +9,6 @@ import br.com.barberscheduler.backend.model.Servico;
 
 @Repository
 public interface ServicoRepository extends JpaRepository<Servico, Long> {
+    
     Optional<Servico> findByNome(String nome);
 }

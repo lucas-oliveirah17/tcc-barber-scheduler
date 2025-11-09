@@ -44,7 +44,7 @@ public class UsuarioService {
     public Usuario findEntidadeById(Long id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Usuario de ID " + id + " não encontrado ou inativo.") );
+                        "Usuário de ID " + id + " não encontrado ou inativo.") );
     }
     
     @Transactional(readOnly = true)
@@ -59,7 +59,7 @@ public class UsuarioService {
     public UsuarioDTO buscarPorId(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Usuario de ID " + id + " não encontrado ou inativo."));
+                        "Usuário de ID " + id + " não encontrado ou inativo."));
         
         return converterParaDTO(usuario);
     }
@@ -89,14 +89,15 @@ public class UsuarioService {
     public UsuarioDTO atualizar(Long id, UsuarioUpdateDTO dto) {
         Usuario usuarioExistente = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Usuario de ID " + id + " não encontrado ou inativo."));
+                        "Usuário de ID " + id + " não encontrado ou inativo."));
         
         if(dto.getEmail() != null && 
                 !dto.getEmail().equals(usuarioExistente.getEmail())) {
-            if(usuarioRepository.existsByEmailRegardlessOfStatus(dto.getEmail())) {
-                throw new IllegalArgumentException(
-                        "O e-mail " + dto.getEmail() + " já está cadastrado.");
-            }
+            usuarioRepository.findByEmailRegardlessOfStatus(dto.getEmail())
+                .ifPresent(u -> {
+                    throw new IllegalArgumentException(
+                            "O e-mail " + dto.getEmail() + " já está cadastrado.");
+                    });
             usuarioExistente.setEmail(dto.getEmail());
         }
         
@@ -117,7 +118,7 @@ public class UsuarioService {
     public void deletar(Long id) {
         if(!usuarioRepository.existsById(id)) {
             throw new EntityNotFoundException(
-                    "Usuario de ID " + id + " não encontrado ou inativo.");
+                    "Usuário de ID " + id + " não encontrado ou inativo.");
         }
         
         usuarioRepository.deleteById(id);

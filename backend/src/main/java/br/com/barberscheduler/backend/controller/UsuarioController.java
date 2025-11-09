@@ -21,6 +21,7 @@ import br.com.barberscheduler.backend.service.UsuarioService;
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
+    
     private final UsuarioService usuarioService;
     
     public UsuarioController(UsuarioService usuarioService) {
@@ -46,6 +47,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> buscarPorId(
             @PathVariable Long id) {
         UsuarioDTO usuario = usuarioService.buscarPorId(id);
+        
         return ResponseEntity.ok(usuario);
     }
     
@@ -54,6 +56,7 @@ public class UsuarioController {
             @PathVariable Long id, 
             @RequestBody UsuarioUpdateDTO dto) {
         UsuarioDTO usuarioAtualizado = usuarioService.atualizar(id, dto);
+        
         return ResponseEntity.ok(usuarioAtualizado);
     }
     
@@ -61,6 +64,7 @@ public class UsuarioController {
     public ResponseEntity<Void> deletar(
             @PathVariable Long id){
         usuarioService.deletar(id);
+        
         return ResponseEntity.noContent().build();
     }
 }

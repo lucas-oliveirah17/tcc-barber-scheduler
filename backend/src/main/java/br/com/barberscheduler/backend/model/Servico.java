@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "servicos")
-@SQLDelete(sql = "UPDATE usuarios SET ativo = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE servicos SET ativo = false WHERE id = ?")
 @SQLRestriction("ativo = true")
 public class Servico {
     
@@ -22,7 +22,7 @@ public class Servico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String nome;
     
     @Column(nullable = true, length = 255)

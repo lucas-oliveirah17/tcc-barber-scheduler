@@ -1,6 +1,6 @@
 package br.com.barberscheduler.backend.dto;
 
-// DTO para RECEBER dados ao atualizar um usuário
+// DTO para RECEBER dados ao atualizar um Usuario
 public class UsuarioUpdateDTO {
     
     private String nome;

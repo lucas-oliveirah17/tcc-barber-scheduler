@@ -4,7 +4,7 @@ import br.com.barberscheduler.backend.model.enums.PerfilUsuario;
 
 import java.time.LocalDateTime;
 
-//DTO para RETORNAR dados de usuário ao frontend
+//DTO para RETORNAR dados de Usuario ao frontend
 public class UsuarioDTO {
     
     private Long id;
